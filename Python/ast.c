@@ -3346,6 +3346,24 @@ ast_for_expr_stmt(struct compiling *c, const node *n)
                              n->n_end_lineno, n->n_end_col_offset, c->c_arena);
         }
     }
+
+    else if (TYPE(CHILD(n, 1)) == pipe_stmt) {
+        expr_ty expr1, expr2;
+        node *ch = CHILD(n, 0);
+        node *fn = CHILD(n, 2);
+        expr1  = ast_for_arguments(c, ch);
+        if (!expr1)
+            return NULL;
+
+        expr2 = ast_for_expr_stmt(c, fn);
+
+        if (!expr2)
+            return NULL;
+
+        return Call(expr2, expr1, NULL, LINENO(n), n->n_col_offset,
+                         n->n_end_lineno, n->n_end_col_offset, c->c_arena);
+    }
+
     else {
         int i, nch_minus_type, has_type_comment;
         asdl_seq *targets;

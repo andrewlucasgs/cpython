@@ -1,0 +1,2 @@
+a ='andrew'
+a |> print()

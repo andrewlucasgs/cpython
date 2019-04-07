@@ -92,3 +92,4 @@
 #define func_type_input 345
 #define func_type 346
 #define typelist 347
+#define pipe_stmt 348
